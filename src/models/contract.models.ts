@@ -1,0 +1,34 @@
+export interface Contract {
+  id_contratacion?: string;
+  n_carpeta: string;
+  n_tomo: string;
+  nota_ine: string;
+  nota_aceptacion: string;
+  codigo_proceso: string;
+  hoja_ruta: string;
+  modalidad_contrato: string;
+  area_solicitud: string;
+  cargo_consultoria: string;
+  departamento: string;
+  PAC: string;
+  FUC: string;
+  POA: string;
+  fecha_certificacion: Date | null;
+  n_certificacion: string;
+  monto_total_cargo: number;
+  area: string;
+  UTC: string;
+  nombre_adjudicado: string;
+  n_cedula: string;
+  codigo_contrato: string;
+  n_contrato: string;
+  fecha_suscp_contrato: Date | null;
+  fecha_concl_contrato: Date | null;
+  fecha_resolucion: Date | null;
+  hr_resolucion: string;
+  CUCE: string;
+  RUPE: string;
+  responsable_proceso: string;
+  ubicacion_documento: string;
+  observaciones?: string;
+}
