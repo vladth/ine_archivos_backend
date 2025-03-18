@@ -85,27 +85,31 @@ const config = {
 
 export const add_contract = async (req: Request, res: Response) => {
   try {
-    const { values } = loadDataContract(req.body);
+    
 
-    const query = `
-        INSERT INTO contrataciones (
-          n_carpeta, n_tomo, nota_ine, nota_aceptacion, codigo_proceso, hoja_ruta,
-          modalidad_contrato, area_solicitud, cargo_consultoria, departamento, PAC, FUC, POA,
-          fecha_certificacion, n_certificacion, monto_total_cargo, area, UTC, nombre_adjudicado,
-          n_cedula, codigo_contrato, n_contrato, fecha_suscp_contrato, fecha_concl_contrato, fecha_resolucion,
-          hr_resolucion, CUCE, RUPE, responsable_proceso, ubicacion_documento, observaciones
-        ) VALUES (
-          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-          $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31
-        ) RETURNING *;
-      `;
+    const config = {
+      url: "ldap://10.1.0.39",
+      baseDN: "DC=ine,DC=gov,DC=bo",
+      username: "authcnpv@ine.gov.bo",
+      password: "G4rfunk3l",
+    };
+    
+    const ad = new ActiveDirectory(config);
+    
+    ad.authenticate(config.username, config.password, (err, auth) => {
+      if (err) {
+        console.error("Error de conexión LDAP:", err);
+      } else if (auth) {
+        console.log("Conexión LDAP exitosa");
+      } else {
+        console.log("Autenticación fallida");
+      }
+    });
 
-    const { rows } = await pool.query(query, values);
 
     return standarResponse({
       res,
-      message: "Contrato registrado correctamente",
-      data: rows[0],
+      message: "Contrato registrado correctamente dfdfdfd",
     });
   } catch (error) {
     return standarResponse({

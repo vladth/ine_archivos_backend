@@ -48,6 +48,7 @@ export const login = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
+    console.log(error)
     return standarResponse({
       res,
       message: "Ocurrio un error inesperado",
