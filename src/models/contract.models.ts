@@ -1,6 +1,7 @@
 export interface Contract {
   id_contratacion?: string;
   n_carpeta: string;
+  programa: Array<Number>;
   n_tomo: string;
   nota_ine: string;
   nota_aceptacion: string;

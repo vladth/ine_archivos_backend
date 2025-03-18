@@ -1,20 +1,33 @@
-CREATE DATABASE IF NOT EXISTS doc_system;
+-- CREATE DATABASE IF NOT EXISTS doc_system;
 
-CREATE TABLE usuarios(
-    id_usuario      SERIAL PRIMARY KEY,
-    nombres         VARCHAR(100) NOT NULL,
-    apellidos       VARCHAR(100) NOT NULL,
-    cedula          VARCHAR(10) UNIQUE NOT NULL,
-    telefono        VARCHAR(20) NOT NULL,
-    usuario         VARCHAR(100) UNIQUE NOT NULL,
-    contrasenia     TEXT NOT NULL,
-    rol             INT,
-    estado          SMALLINT DEFAULT 1 CHECK (estado IN (0, 1))
+
+CREATE TABLE roles(
+    id_rol         SERIAL PRIMARY KEY,
+    rol            VARCHAR(100) NOT NULL,
+    estado         SMALLINT DEFAULT 1 CHECK (estado IN (0, 1))
 );
 
+INSERT INTO roles (rol)
+VALUES 
+    ('ADMINISTRADOR'),
+    ('ARCHIVO ADMINISTRATIVO FINANCIERO'),
+    ('ARCHIVO DOCUMENTAL'),
+    ('TÉCNICO');
+
+CREATE TABLE usuarios(
+    id_usuario          SERIAL PRIMARY KEY,
+    id_rol              INT NOT NULL,     
+    nombre_completo     VARCHAR(100) NOT NULL,
+    cedula              VARCHAR(10) UNIQUE NOT NULL,
+    telefono            VARCHAR(20) NOT NULL,
+    nombre_usuario      VARCHAR(100) NOT NULL,
+    estado              SMALLINT DEFAULT 1 CHECK (estado IN (0, 1)),
+    CONSTRAINT fk_roles_usuarios FOREIGN KEY (id_rol) REFERENCES roles (id_rol) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 CREATE TABLE contrataciones(
     id_contratacion         SERIAL PRIMARY KEY,
+    programa                INT[],
     n_carpeta               VARCHAR(50),
     n_tomo                  VARCHAR(50),
     nota_ine                VARCHAR(100),    
@@ -62,6 +75,7 @@ CREATE TABLE modificacion_contrataciones (
 
 CREATE TABLE adquisiciones(
     id_adquisicion          SERIAL PRIMARY KEY,
+    programa                INT[],
     n_carpeta               VARCHAR(50),
     n_tomo                  VARCHAR(50),
     nota_ine                VARCHAR(100),
@@ -92,6 +106,7 @@ CREATE TABLE adquisiciones(
 
 CREATE TABLE contabilidad(
     id_contabilidad         SERIAL PRIMARY KEY,
+    programa                INT[],
     n_carpeta               VARCHAR(50),
     codigo_comprobante      VARCHAR(100),
     mes                     DATE,
