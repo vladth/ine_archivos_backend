@@ -25,6 +25,9 @@ CREATE TABLE usuarios(
     CONSTRAINT fk_roles_usuarios FOREIGN KEY (id_rol) REFERENCES roles (id_rol) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+INSERT INTO usuarios(id_rol, nombre_completo, cedula, telefono, nombre_usuario)
+VALUES (1, 'Edwin Vladimir Mamani Perca', '11548033', '76578908', 'evmamanip');
+
 CREATE TABLE contrataciones(
     id_contratacion         SERIAL PRIMARY KEY,
     programa                INT[],
